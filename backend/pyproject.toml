@@ -1,0 +1,49 @@
+[project]
+name = "orbitdesk-api"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+  "aiofiles==24.1.0",
+  "alembic==1.16.4",
+  "asyncpg==0.30.0",
+  "email-validator==2.2.0",
+  "fastapi==0.116.1",
+  "filetype==1.2.0",
+  "httpx==0.28.1",
+  "pwdlib[argon2]==0.2.1",
+  "PyJWT==2.10.1",
+  "pydantic-settings==2.10.1",
+  "python-multipart==0.0.20",
+  "sqlalchemy[asyncio]==2.0.42",
+  "uvicorn[standard]==0.35.0",
+]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[project.optional-dependencies]
+dev = [
+  "mypy==1.17.1",
+  "pytest==8.4.1",
+  "pytest-asyncio==1.1.0",
+  "ruff==0.12.7",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+strict = true
