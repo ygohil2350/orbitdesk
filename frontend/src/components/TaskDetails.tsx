@@ -27,7 +27,7 @@ import {
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { api, getToken, wsUrl } from "../lib/api";
+import { API_URL, api, getToken, wsUrl } from "../lib/api";
 import type { Attachment, Comment, Status, Task, User } from "../lib/types";
 
 type Props = {
@@ -1166,7 +1166,7 @@ function SecureImage({
 function uploadAttachment(path: string, file: File, onProgress: (progress: number) => void) {
   return new Promise<Attachment>((resolve, reject) => {
     const request = new XMLHttpRequest();
-    request.open("POST", `${import.meta.env.VITE_API_URL || "/api/v1"}${path}`);
+    request.open("POST", `${API_URL}${path}`);
     const token = getToken();
     if (token) request.setRequestHeader("Authorization", `Bearer ${token}`);
     request.upload.onprogress = (event) =>
@@ -1186,7 +1186,7 @@ function uploadAttachment(path: string, file: File, onProgress: (progress: numbe
 }
 
 async function fetchAttachment(id: string) {
-  const response = await fetch(`/api/v1/attachments/${id}`, {
+  const response = await fetch(`${API_URL}/attachments/${id}`, {
     headers: { Authorization: `Bearer ${getToken()}` },
   });
   if (!response.ok) throw new Error("Could not load attachment");

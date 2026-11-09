@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
+export const API_URL = import.meta.env.VITE_API_URL || "/api/v1";
 
 export class ApiError extends Error {
   constructor(
@@ -32,6 +32,8 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
 }
 
 export function wsUrl(path: string) {
+  // When the API lives on another origin (e.g. web on Vercel, API on Render), connect to it directly.
+  if (/^https?:\/\//.test(API_URL)) return `${API_URL.replace(/^http/, "ws")}${path}`;
   const protocol = location.protocol === "https:" ? "wss:" : "ws:";
   return `${protocol}//${location.host}${API_URL}${path}`;
 }
