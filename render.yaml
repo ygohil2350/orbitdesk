@@ -4,14 +4,15 @@ services:
     name: orbitdesk-api
     runtime: docker
     plan: free
+    region: singapore
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     healthCheckPath: /api/v1/health
     envVars:
       - key: DATABASE_URL # postgresql+asyncpg://USER:PASSWORD@HOST/DB?ssl=require (Neon direct endpoint, not -pooler)
         sync: false
-      - key: CORS_ORIGIN # the Vercel URL of the web app
-        sync: false
+      - key: CORS_ORIGIN
+        value: https://orbitdesk-livid.vercel.app
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_TTL_MINUTES
